@@ -1,22 +1,11 @@
 import { json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 
-interface IPost {
-  slug: string
-  title: string
-}
+import type { IPost } from "~/interfaces/post.interfaces"
+import { getPosts } from "~/models/post.server"
 
 export const loader = async () => {
-  const posts: IPost[] = [
-    {
-      slug: "is-tracking-expenses-important",
-      title: "Is tracking expenses is important?"
-    },
-    {
-      slug: "why-use-green-couch",
-      title: "Why use Green Couch"
-    }
-  ]
+  const posts = await getPosts()
 
   return json({ posts })
 }
