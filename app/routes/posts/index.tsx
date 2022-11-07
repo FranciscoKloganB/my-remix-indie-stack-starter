@@ -1,17 +1,16 @@
-import { json } from "@remix-run/node"
-import { Link, useLoaderData } from "@remix-run/react"
-
-import type { IPost } from "~/interfaces/post.interfaces"
-import { getPosts } from "~/models/post.server"
+import { json } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
+import type { IPost } from "~/interfaces/post.interfaces";
+import { getPosts } from "~/models/post.server";
 
 export const loader = async () => {
-  const posts = await getPosts()
+  const posts = await getPosts();
 
-  return json({ posts })
-}
+  return json({ posts });
+};
 
 export default function PostsRoute() {
-  const { posts } = useLoaderData()
+  const { posts } = useLoaderData();
 
   return (
     <main>
@@ -26,5 +25,5 @@ export default function PostsRoute() {
         ))}
       </ul>
     </main>
-  )
+  );
 }
