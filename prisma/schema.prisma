@@ -25,6 +25,15 @@ model Password {
   userId String @unique
 }
 
+model Post {
+  slug     String @id
+  title    String
+  markdown String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Note {
   id    String @id @default(cuid())
   title String

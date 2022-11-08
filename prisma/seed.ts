@@ -1,3 +1,4 @@
+import { posts } from "./seed-mocks";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
@@ -39,6 +40,14 @@ async function seed() {
       userId: user.id,
     },
   });
+
+  for (const post of posts) {
+    await prisma.post.upsert({
+      where: { slug: post.slug },
+      update: post,
+      create: post,
+    });
+  }
 
   console.log(`Database has been seeded. 🌱`);
 }
