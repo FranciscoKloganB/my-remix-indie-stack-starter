@@ -1,9 +1,7 @@
+import type { Post } from "@prisma/client";
 import { prisma } from "~/db.server";
-import type { IPost } from "~/interfaces/post.interfaces";
 
-export async function getPostListings(): Promise<
-  Pick<IPost, "slug" | "title">[]
-> {
+export function getPostListings() {
   return prisma.post.findMany({
     select: {
       slug: true,
@@ -12,6 +10,14 @@ export async function getPostListings(): Promise<
   });
 }
 
-export async function getPosts(): Promise<IPost[]> {
+export function getPosts() {
   return prisma.post.findMany();
+}
+
+export function getPost(slug: Post["slug"]) {
+  return prisma.post.findUnique({
+    where: {
+      slug,
+    },
+  });
 }
