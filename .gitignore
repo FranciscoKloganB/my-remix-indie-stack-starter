@@ -4,9 +4,10 @@ node_modules
 /public/build
 .env
 
+/app/styles/tailwind.css
 /cypress/screenshots
 /cypress/videos
 /prisma/data.db
 /prisma/data.db-journal
+/storybook-static/
 
-/app/styles/tailwind.css
