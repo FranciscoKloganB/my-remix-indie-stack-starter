@@ -13,7 +13,8 @@ FROM base as deps
 WORKDIR /myapp
 
 ADD package.json package-lock.json .npmrc ./
-RUN npm install --production=false
+RUN npm install -g npm@8.19.3
+RUN npm install --production=false --ignore-scripts
 
 # Setup production node_modules
 FROM base as production-deps
