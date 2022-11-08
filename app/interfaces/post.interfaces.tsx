@@ -1,5 +1,5 @@
 export interface IPost {
-  slug: string;
-  title: string;
-  markdown: string;
+  slug: string
+  title: string
+  markdown: string
 }

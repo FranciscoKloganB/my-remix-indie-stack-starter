@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "@remix-run/react"
 
 export default function NoteIndexPage() {
   return (
@@ -8,5 +8,5 @@ export default function NoteIndexPage() {
         create a new note.
       </Link>
     </p>
-  );
+  )
 }

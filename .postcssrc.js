@@ -4,8 +4,8 @@ module.exports = {
     "tailwindcss/nesting": {},
     tailwindcss: {},
     "postcss-focus-visible": {
-      replaceWith: "[data-focus-visible-added]",
+      replaceWith: "[data-focus-visible-added]"
     },
-    autoprefixer: {},
-  },
-};
+    autoprefixer: {}
+  }
+}

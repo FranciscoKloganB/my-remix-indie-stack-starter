@@ -5,10 +5,10 @@ module.exports = {
     "@remix-run/eslint-config/node",
     "@remix-run/eslint-config/jest-testing-library",
     "prettier",
-    "plugin:storybook/recommended",
+    "plugin:storybook/recommended"
   ],
   env: {
-    "cypress/globals": true,
+    "cypress/globals": true
   },
   plugins: ["cypress", "no-only-tests"],
   // we're using vitest which has a very similar API to jest
@@ -16,8 +16,8 @@ module.exports = {
   // set the jest version.
   settings: {
     jest: {
-      version: 28,
-    },
+      version: 28
+    }
   },
   rules: {
     curly: "error",
@@ -26,8 +26,8 @@ module.exports = {
       "double",
       {
         avoidEscape: false,
-        allowTemplateLiterals: true,
-      },
+        allowTemplateLiterals: true
+      }
     ],
     "max-len": [
       "error",
@@ -37,9 +37,9 @@ module.exports = {
         ignoreStrings: true,
         ignoreComments: true,
         ignoreTrailingComments: true,
-        ignoreUrls: true,
-      },
+        ignoreUrls: true
+      }
     ],
-    "no-only-tests/no-only-tests": "error",
-  },
-};
+    "no-only-tests/no-only-tests": "error"
+  }
+}

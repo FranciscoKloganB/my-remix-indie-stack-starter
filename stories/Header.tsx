@@ -1,24 +1,21 @@
-import { Button } from "./Button";
-import React from "react";
-import "./header.css";
+import React from "react"
+
+import { Button } from "./Button"
+
+import "./header.css"
 
 type User = {
-  name: string;
-};
-
-interface HeaderProps {
-  user?: User;
-  onLogin: () => void;
-  onLogout: () => void;
-  onCreateAccount: () => void;
+  name: string
 }
 
-export const Header = ({
-  user,
-  onLogin,
-  onLogout,
-  onCreateAccount,
-}: HeaderProps) => (
+interface HeaderProps {
+  user?: User
+  onLogin: () => void
+  onLogout: () => void
+  onCreateAccount: () => void
+}
+
+export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
   <header>
     <div className="wrapper">
       <div>
@@ -56,15 +53,10 @@ export const Header = ({
         ) : (
           <>
             <Button size="small" onClick={onLogin} label="Log in" />
-            <Button
-              primary
-              size="small"
-              onClick={onCreateAccount}
-              label="Sign up"
-            />
+            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />
           </>
         )}
       </div>
     </div>
   </header>
-);
+)
