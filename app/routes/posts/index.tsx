@@ -1,22 +1,26 @@
+import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import type { IPost } from "~/interfaces/post.interfaces";
 import { getPosts } from "~/models/post.server";
 
-export const loader = async () => {
+type LoaderData = {
+  posts: Awaited<ReturnType<typeof getPosts>>;
+};
+
+export const loader: LoaderFunction = async () => {
   const posts = await getPosts();
 
-  return json({ posts });
+  return json<LoaderData>({ posts });
 };
 
 export default function PostsRoute() {
-  const { posts } = useLoaderData();
+  const { posts } = useLoaderData<LoaderData>();
 
   return (
     <main>
       <h1>Posts</h1>
       <ul>
-        {posts.map((post: IPost) => (
+        {posts.map((post) => (
           <li key={post.slug}>
             <Link to={post.slug} className="text-blue-600 underline">
               {post.title}
