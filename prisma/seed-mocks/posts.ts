@@ -5,7 +5,7 @@ export const posts = [
     markdown: `
 # This is my first post!
 Isn't it great?
-      `.trim()
+      `.trim(),
   },
   {
     slug: "trail-riding-with-onewheel",
@@ -14,6 +14,6 @@ Isn't it great?
 # Floating the trails
 Have you ever tried riding a onewheel? It's an out-of-this-world _experience_!
 Imagine that, but in the beauty of nature and it's just amazing.
-      `.trim()
-  }
-]
+      `.trim(),
+  },
+];
