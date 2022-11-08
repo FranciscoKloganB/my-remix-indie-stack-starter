@@ -30,5 +30,8 @@
   },
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///home/francisco-barros/github/greencouch/.github/workflows/deploy.yml"
   }
 }
