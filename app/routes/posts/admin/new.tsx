@@ -1,9 +1,18 @@
 import type { ActionFunction } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react"
 import { json, redirect } from "@remix-run/server-runtime"
+import invariant from "tiny-invariant"
 
 import { FormError } from "~/components"
 import { createPost } from "~/models/post.server"
+
+type ActionData =
+  | {
+      markdown: string | null
+      slug: string | null
+      title: string | null
+    }
+  | undefined
 
 const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg`
 
@@ -14,7 +23,7 @@ export const action: ActionFunction = async ({ request }) => {
   const slug = formData.get("slug")
   const markdown = formData.get("markdown")
 
-  const errors = {
+  const errors: ActionData = {
     title: title ? null : "title is required",
     slug: slug ? null : "slug is required",
     markdown: markdown ? null : "markdown is required"
@@ -23,8 +32,12 @@ export const action: ActionFunction = async ({ request }) => {
   const hasErrors = Object.values(errors).some((errorMessage) => errorMessage !== null)
 
   if (hasErrors) {
-    return json(errors)
+    return json<ActionData>(errors)
   }
+
+  invariant(typeof title === "string", "title must be a string")
+  invariant(typeof slug === "string", "slug must be a string")
+  invariant(typeof markdown === "string", "markdown must be a string")
 
   await createPost({ title, slug, markdown })
 
@@ -32,7 +45,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function NewPostRoute() {
-  const errors = useActionData()
+  const errors = useActionData<ActionData>()
 
   return (
     <Form method="post">
