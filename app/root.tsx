@@ -6,9 +6,11 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
+  useLoaderData
 } from "@remix-run/react"
 
+import { publicConfig } from "./helpers/env/publicConfig.server"
 import { getUser } from "./session.server"
 import tailwindStylesheetUrl from "./styles/tailwind.css"
 
@@ -22,13 +24,21 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1"
 })
 
+type LoaderData = {
+  user: Awaited<ReturnType<typeof getUser>>
+  environ: ReturnType<typeof publicConfig>
+}
+
 export async function loader({ request }: LoaderArgs) {
-  return json({
-    user: await getUser(request)
+  return json<LoaderData>({
+    user: await getUser(request),
+    environ: publicConfig()
   })
 }
 
 export default function App() {
+  const data = useLoaderData<LoaderData>()
+
   return (
     <html lang="en" className="h-full">
       <head>
@@ -39,6 +49,11 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.environ = ${JSON.stringify(data.environ)}`
+          }}
+        />
         <LiveReload />
       </body>
     </html>
