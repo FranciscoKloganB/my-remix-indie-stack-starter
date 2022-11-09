@@ -43,6 +43,7 @@
     "@remix-run/serve": "^1.7.5",
     "@remix-run/server-runtime": "^1.7.5",
     "bcryptjs": "^2.4.3",
+    "clsx": "^1.2.1",
     "i18next": "^22.0.4",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-fs-backend": "^2.0.0",
