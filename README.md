@@ -57,9 +57,16 @@ The database seed script creates a new user with some data you can use to get st
 
 ### Keeping the development database up to date
 
-- Run `npm run prisma:push` to force the most up to date Prisma Schemas to be applied
-  to our local database. Then run `npm run prisma:seed` to create some fake data. See
-  `./prisma/seed.ts`.
+- Use `npm run prisma:push` to prototype a schema at the start of a project and
+  initialize a migration history. When you are happy with the first draft run
+  `npm run prisma:migrate:dev` to generate a migration from your changes (you will be
+  asked to reset local data and to provide a name for the migration). Any change made to
+  the model from that moment onwards should always be done through migrations and never
+  via push!
+
+Whenever you run a migration, a set of SQL or NoSQL commands is generated to handle
+changes that exist between the current model (being developed and applied) and the
+existing one (previous models).
 
 ### Relevant code
 

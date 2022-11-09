@@ -19,6 +19,7 @@
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "prepare": "husky install && chmod ug+x .husky/*",
     "prisma:push": "npx prisma db push",
+    "prisma:migrate:dev": "npx prisma migrate dev",
     "prisma:seed": "npx prisma db seed",
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
     "start": "remix-serve build",
