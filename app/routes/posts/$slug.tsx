@@ -1,23 +1,29 @@
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import type { LoaderFunction } from "@remix-run/server-runtime/dist/router"
+import invariant from "tiny-invariant"
 
 import { markedSanitized } from "~/helpers/markedSanitized"
 import { getPost } from "~/models/post.server"
 
-type LoaderData = { title: string; html: string }
+type LoaderData = {
+  title: string
+  html: string
+}
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { slug } = params
 
-  if (slug) {
-    const post = await getPost(slug)
-    const html = markedSanitized(post?.markdown ?? "")
+  invariant(slug, "post slug is required")
+  const post = await getPost(slug)
 
-    return json({ title: post?.title, html })
-  }
+  invariant(post, `post not found: ${slug}`)
+  const html = markedSanitized(post.markdown)
 
-  return null
+  return json<LoaderData>({
+    title: post?.title,
+    html: html.toString()
+  })
 }
 
 export default function PostRoute() {
