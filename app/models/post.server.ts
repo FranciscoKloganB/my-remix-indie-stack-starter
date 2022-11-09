@@ -22,3 +22,7 @@ export function getPost(slug: Post["slug"]) {
     }
   })
 }
+
+export function createPost(post: Post) {
+  return prisma.post.create({ data: post })
+}
