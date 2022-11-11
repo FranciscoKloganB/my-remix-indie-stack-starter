@@ -42,6 +42,8 @@
     "@remix-run/react": "^1.7.5",
     "@remix-run/serve": "^1.7.5",
     "@remix-run/server-runtime": "^1.7.5",
+    "@storybook/addons": "^6.5.13",
+    "@storybook/theming": "^6.5.13",
     "bcryptjs": "^2.4.3",
     "i18next": "^22.0.4",
     "i18next-browser-languagedetector": "^7.0.1",
