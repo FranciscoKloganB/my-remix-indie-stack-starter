@@ -1,8 +1,8 @@
 module.exports = {
   colors: {
     "primary-100": "#004643",
-    "primary-300": "#0F3433",
-    "primary-500": "#001E1D",
+    "primary-200": "#0F3433",
+    "primary-300": "#001E1D",
 
     secondary: "#ABD1C6",
 
@@ -12,8 +12,8 @@ module.exports = {
     success: "#79B869",
     error: "#CB4747",
 
-    "neutral-50": "#FFFFFE",
-    "neutral-100": "#E8E4E6",
-    "neutral-400": "#ACAFAC"
+    "neutral-100": "#FFFFFE",
+    "neutral-200": "#E8E4E6",
+    "neutral-300": "#ACAFAC"
   }
 }
