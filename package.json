@@ -121,7 +121,7 @@
     "storybook": "^6.5.13",
     "storybook-css-modules-preset": "^1.1.1",
     "storybook-react-i18next": "^1.1.2",
-    "tailwindcss": "^3.2.2",
+    "tailwindcss": "^3.2.3",
     "taze": "^0.8.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
