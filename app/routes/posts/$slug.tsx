@@ -1,34 +1,38 @@
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import type { LoaderFunction } from "@remix-run/server-runtime/dist/router"
+import invariant from "tiny-invariant"
 
+import { markedSanitized } from "~/helpers/markedSanitized"
 import { getPost } from "~/models/post.server"
 
 type LoaderData = {
-  post: Awaited<ReturnType<typeof getPost>>
+  title: string
+  html: string
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { slug } = params
 
-  if (slug) {
-    const post = await getPost(slug)
-    return json({ post })
-  }
+  invariant(slug, "post slug is required")
+  const post = await getPost(slug)
 
-  return null
+  invariant(post, `post not found: ${slug}`)
+  const html = markedSanitized(post.markdown)
+
+  return json<LoaderData>({
+    title: post?.title,
+    html: html.toString()
+  })
 }
 
 export default function PostRoute() {
-  const { post } = useLoaderData<LoaderData>()
-
-  if (!post) {
-    throw new Error("PostRoute needs to deal with unexisting posts.")
-  }
+  const { title, html } = useLoaderData<LoaderData>()
 
   return (
     <main className="mx-auto max-w-4xl">
-      <h1 className="my-6 border-b-2 text-center text-3xl">{post.title}</h1>
+      <h1 className="my-6 border-b-2 text-center text-3xl">{title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: html }}></div>
     </main>
   )
 }
