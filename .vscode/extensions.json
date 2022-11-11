@@ -1,13 +1,18 @@
-
-
 {
   "recommendations": [
     "bradlc.vscode-tailwindcss",
     "christian-kohler.path-intellisense",
+    "davidanson.vscode-markdownlint",
     "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
     "esbenp.prettier-vscode",
+    "lokalise.i18n-ally",
+    "ms-vscode.vscode-typescript-next",
+    "ms-vsliveshare.vsliveshare",
+    "prisma.prisma",
+    "rvest.vs-code-prettier-eslint",
     "visualstudioexptteam.vscodeintellicode",
     "wix.vscode-import-cost",
-    "prisma.prisma",
+    "vunguyentuan.vscode-postcss",
   ]
 }
