@@ -1,10 +1,12 @@
-/** @type {import('tailwindcss').Config} */
-
 const palette = require("./themes/palette")
 const screens = require("./themes/screens")
 
-// Uncomment once plugin is installed to support theming and add to plugins array as `tailwindcssThemer()`
-// const tailwindcssThemer = require("./themes/themer")
+/**
+ * Uncomment once plugin is installed to support theming and add to plugins
+ * array as `tailwindcssThemer()`
+ *
+ * const tailwindcssThemer = require("./themes/themer")
+ */
 
 /**
  * TODO: @xiasantos
@@ -13,7 +15,11 @@ const screens = require("./themes/screens")
  * See example: https://tailwindcss.com/docs/font-family#using-custom-values
  * Complex things can go into folder ./themes, see ./themes/palette.js
  */
-module.exports = {
+
+/**
+ * @type {import('tailwindcss').Config}
+ */
+const tailwindConfig = {
   content: ["./app/**/*.{ts,tsx,jsx,js}"],
   darkMode: "class",
   plugins: [
@@ -22,6 +28,10 @@ module.exports = {
     require("@tailwindcss/typography")
   ],
   theme: {
+    ringColor: ({ theme }) => ({
+      DEFAULT: theme("colors.primary.400", "#004643"),
+      ...theme("colors")
+    }),
     extend: {
       colors: { ...palette.colors },
       height: {
@@ -45,3 +55,5 @@ module.exports = {
     }
   }
 }
+
+module.exports = tailwindConfig

@@ -56,23 +56,13 @@ export default function NewPostRoute() {
       <p>
         <label>
           Post Title: {errors?.title ? <FormError>{errors.title}</FormError> : null}
-          <FormInput
-            hasError={!!errors?.title}
-            type="text"
-            name="title"
-            className={inputClassName}
-          />
+          <FormInput hasError={!!errors?.title} type="text" name="title" />
         </label>
       </p>
       <p>
         <label>
           Post Slug: {errors?.slug ? <FormError>{errors.slug}</FormError> : null}
-          <FormInput
-            hasError={!!errors?.slug}
-            type="text"
-            name="slug"
-            className={inputClassName}
-          />
+          <FormInput hasError={!!errors?.slug} type="text" name="slug" />
         </label>
       </p>
       <p>

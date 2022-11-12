@@ -1,7 +1,5 @@
 import { clsx } from "clsx"
 
-const baseClasses = "w-full rounded border px-2 py-1 text-lg"
-
 const inputVariants = {
   primary: "border-gray-500",
   error: "border-red-600"
@@ -20,5 +18,10 @@ export function FormInput({
 }: FormInputProps) {
   const dynamicClasses = hasError ? inputVariants["error"] : inputVariants[variant]
 
-  return <input className={clsx(baseClasses, dynamicClasses)} {...rest} />
+  return (
+    <input
+      className={clsx("w-full rounded border px-2 py-1 text-lg", dynamicClasses)}
+      {...rest}
+    />
+  )
 }
