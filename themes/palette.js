@@ -1,5 +1,3 @@
-const { e } = require("vitest/dist/index-220c1d70")
-
 const basePalette = {
   "primary-100": "#00bca4",
   "primary-200": "#00a892",
