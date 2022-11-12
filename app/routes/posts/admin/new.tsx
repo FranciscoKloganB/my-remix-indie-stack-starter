@@ -4,6 +4,7 @@ import { json, redirect } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
 
 import { FormError } from "~/components"
+import { FormInput } from "~/components/FormInput"
 import { createPost } from "~/models/post.server"
 
 type ActionData =
@@ -55,13 +56,23 @@ export default function NewPostRoute() {
       <p>
         <label>
           Post Title: {errors?.title ? <FormError>{errors.title}</FormError> : null}
-          <input type="text" name="title" className={inputClassName} />
+          <FormInput
+            hasError={!!errors?.title}
+            type="text"
+            name="title"
+            className={inputClassName}
+          />
         </label>
       </p>
       <p>
         <label>
           Post Slug: {errors?.slug ? <FormError>{errors.slug}</FormError> : null}
-          <input type="text" name="slug" className={inputClassName} />
+          <FormInput
+            hasError={!!errors?.slug}
+            type="text"
+            name="slug"
+            className={inputClassName}
+          />
         </label>
       </p>
       <p>
