@@ -9,5 +9,6 @@
     "visualstudioexptteam.vscodeintellicode",
     "wix.vscode-import-cost",
     "prisma.prisma",
+    "csstools.postcss"
   ]
 }
