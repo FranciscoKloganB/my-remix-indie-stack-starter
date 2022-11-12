@@ -3,7 +3,7 @@ import React from "react"
 
 import themes from "../themes/screens"
 
-import "../app/styles/tailwind.css"
+import "../styles/global.css"
 
 /**
  * This could be used to add Remix wrappers or Auth providers (e.g.: Auth0, React-Query)
