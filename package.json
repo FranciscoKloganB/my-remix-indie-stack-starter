@@ -15,7 +15,7 @@
     "dev:remix": "cross-env NODE_ENV=development binode --require ./mocks -- @remix-run/dev:remix dev",
     "preformat": "eslint --fix --ext js --ext jsx --ext ts --ext tsx .",
     "format": "prettier --write \"**/*.{css,json,js,jsx,prisma,sass,scss,ts,tsx}\"",
-    "generate:css": "tailwindcss -w -i ./styles/global.css -o ./app/styles/tailwind.css",
+    "generate:css": "tailwindcss -w -i ./styles/global.css -o ./app/styles/global.css",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "prepare": "husky install && chmod ug+x .husky/*",
     "prisma:push": "npx prisma db push",

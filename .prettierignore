@@ -15,4 +15,4 @@ storybook-static/
 /public/build
 .env
 
-/app/styles/tailwind.css
+/app/styles/global.css

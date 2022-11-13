@@ -4,7 +4,7 @@ node_modules
 /public/build
 .env
 
-/app/styles/tailwind.css
+/app/styles/global.css
 /cypress/screenshots
 /cypress/videos
 /prisma/data.db
