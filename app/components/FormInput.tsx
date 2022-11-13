@@ -20,7 +20,10 @@ export function FormInput({
 
   return (
     <input
-      className={clsx("w-full rounded border px-2 py-1 text-lg", dynamicClasses)}
+      className={clsx(
+        "w-full rounded border px-2 py-1 text-lg focus-visible:ring-primary-200",
+        dynamicClasses
+      )}
       {...rest}
     />
   )

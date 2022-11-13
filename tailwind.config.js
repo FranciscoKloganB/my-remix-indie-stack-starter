@@ -29,8 +29,8 @@ const tailwindConfig = {
   ],
   theme: {
     ringColor: ({ theme }) => ({
-      DEFAULT: theme("colors.primary.400", "#004643"),
-      ...theme("colors")
+      ...theme("colors"),
+      DEFAULT: palette.colors["primary-light"]
     }),
     extend: {
       colors: { ...palette.colors },
