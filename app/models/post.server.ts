@@ -33,3 +33,7 @@ export function updatePost(
 ) {
   return prisma.post.update({ data: post, where: { slug } })
 }
+
+export function deletePost(slug: string) {
+  return prisma.post.delete({ where: { slug } })
+}

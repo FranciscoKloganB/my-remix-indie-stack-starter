@@ -6,7 +6,7 @@ import invariant from "tiny-invariant"
 
 import { FormError } from "~/components"
 import { FormInput } from "~/components/FormInput"
-import { createPost, getPost, updatePost } from "~/models/post.server"
+import { createPost, deletePost, getPost, updatePost } from "~/models/post.server"
 import { requireAdminUser } from "~/session.server"
 
 type ActionData =
@@ -25,6 +25,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   await requireAdminUser(request)
 
   const { slug } = params
+
   invariant(slug, "post slug is required; to make a new post set slug to `create`")
 
   if (slug.toLowerCase() === "create") {
@@ -40,6 +41,15 @@ export const action: ActionFunction = async ({ request, params }) => {
   await requireAdminUser(request)
 
   const formData = await request.formData()
+  const intent = formData.get("intent")
+
+  if (intent === "delete") {
+    invariant(params.slug, "slug param is required when action is `delete`")
+
+    await deletePost(params.slug)
+
+    return redirect("/posts/admin")
+  }
 
   const title = formData.get("title")
   const slug = formData.get("slug")
@@ -80,6 +90,7 @@ export default function CreatePostRoute() {
 
   const isCreating = transition.submission?.formData.get("intent") === "create"
   const isUpdating = transition.submission?.formData.get("intent") === "update"
+  const isDeleting = transition.submission?.formData.get("intent") === "delete"
 
   return (
     <Form method="post" key={existingPost?.slug ?? "create"}>
@@ -118,6 +129,17 @@ export default function CreatePostRoute() {
         />
       </p>
       <div className="flex justify-end gap-4">
+        {isNewPost ? null : (
+          <button
+            type="submit"
+            name="intent"
+            value="delete"
+            className="rounded bg-red-500 py-2 px-4 text-white hover:bg-red-600 focus:bg-red-400 disabled:bg-red-300"
+            disabled={isDeleting}
+          >
+            {isDeleting ? "Deleting..." : "Delete"}
+          </button>
+        )}
         <button
           className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
           disabled={isCreating || isUpdating}
