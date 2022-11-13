@@ -6,7 +6,7 @@ import invariant from "tiny-invariant"
 
 import { FormError } from "~/components"
 import { FormInput } from "~/components/FormInput"
-import { createPost, getPost } from "~/models/post.server"
+import { createPost, getPost, updatePost } from "~/models/post.server"
 import { requireAdminUser } from "~/session.server"
 
 type ActionData =
@@ -64,31 +64,45 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (params.slug?.toLowerCase() === "create") {
     await createPost({ title, slug, markdown })
   } else {
-    // await updatePost({ title, slug, markdown })
+    await updatePost(slug, { title, slug, markdown })
   }
 
   return redirect("/posts/admin")
 }
 
 export default function CreatePostRoute() {
-  const data = useLoaderData<LoaderData>()
+  const transition = useTransition()
+
   const errors = useActionData<ActionData>()
 
-  const transition = useTransition()
-  const isCreatingPost = !!transition.submission
+  const { post: existingPost } = useLoaderData<LoaderData>()
+  const isNewPost = !existingPost
+
+  const isCreating = transition.submission?.formData.get("intent") === "create"
+  const isUpdating = transition.submission?.formData.get("intent") === "update"
 
   return (
-    <Form method="post">
+    <Form method="post" key={existingPost?.slug ?? "create"}>
       <p>
         <label>
           Post Title: {errors?.title ? <FormError>{errors.title}</FormError> : null}
-          <FormInput hasError={!!errors?.title} type="text" name="title" />
+          <FormInput
+            hasError={!!errors?.title}
+            type="text"
+            name="title"
+            defaultValue={existingPost?.title}
+          />
         </label>
       </p>
       <p>
         <label>
           Post Slug: {errors?.slug ? <FormError>{errors.slug}</FormError> : null}
-          <FormInput hasError={!!errors?.slug} type="text" name="slug" />
+          <FormInput
+            hasError={!!errors?.slug}
+            type="text"
+            name="slug"
+            defaultValue={existingPost?.slug}
+          />
         </label>
       </p>
       <p>
@@ -100,17 +114,19 @@ export default function CreatePostRoute() {
           rows={20}
           name="markdown"
           className="w-full rounded border border-gray-500 px-2 py-1 text-lg font-mono"
+          defaultValue={existingPost?.markdown}
         />
       </p>
       <div className="flex justify-end gap-4">
         <button
-          type="submit"
-          name="intent"
-          value={"create"}
           className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
-          disabled={isCreatingPost}
+          disabled={isCreating || isUpdating}
+          name="intent"
+          type="submit"
+          value={isNewPost ? "create" : "update"}
         >
-          {isCreatingPost ? "Creating..." : "Create Post"}
+          {isNewPost ? (isCreating ? "Creating..." : "Create Post") : null}
+          {isNewPost ? null : isUpdating ? "Updating..." : "Edit Post"}
         </button>
       </div>
     </Form>
