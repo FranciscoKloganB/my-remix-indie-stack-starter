@@ -5,11 +5,14 @@ import isbot from "isbot"
 import { renderToPipeableStream } from "react-dom/server"
 import { PassThrough } from "stream"
 
-import { publicConfig } from "./helpers/env/publicConfig.server"
+import { publicConfig } from "./env/env.server"
 
 const ABORT_DELAY = 5000
 
-// Make environment variables provided by getEnv() available in all of the backend code
+/**
+ * Make public environment variables provided by env.server.ts available in all of
+ * the backend code.
+ */
 global.environ = publicConfig() ?? {}
 
 export default function handleRequest(

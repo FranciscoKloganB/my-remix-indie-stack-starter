@@ -23,7 +23,7 @@
     "prisma:seed": "npx prisma db seed",
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
     "start": "remix-serve build",
-    "start:mocks": "binode --require ./mocks --require ./node_modules/dotenv/config -- @remix-run/serve:remix-serve build",
+    "start:mocks": "binode --require ./mocks -- @remix-run/serve:remix-serve build",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
     "test": "vitest run",
