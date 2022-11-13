@@ -1,12 +1,12 @@
 import type { ActionFunction } from "@remix-run/node"
-import { Form, useActionData, useTransition } from "@remix-run/react"
+import { Form, useActionData, useLoaderData, useTransition } from "@remix-run/react"
 import type { LoaderFunction } from "@remix-run/server-runtime"
 import { json, redirect } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
 
 import { FormError } from "~/components"
 import { FormInput } from "~/components/FormInput"
-import { createPost } from "~/models/post.server"
+import { createPost, getPost } from "~/models/post.server"
 import { requireAdminUser } from "~/session.server"
 
 type ActionData =
@@ -17,13 +17,26 @@ type ActionData =
     }
   | undefined
 
-export const loader: LoaderFunction = async ({ request }) => {
-  await requireAdminUser(request)
-
-  return json({})
+type LoaderData = {
+  post: Awaited<ReturnType<typeof getPost>>
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
+  await requireAdminUser(request)
+
+  const { slug } = params
+  invariant(slug, "post slug is required; to make a new post set slug to `create`")
+
+  if (slug.toLowerCase() === "create") {
+    return json({})
+  }
+
+  const post = await getPost(slug)
+
+  return json<LoaderData>({ post })
+}
+
+export const action: ActionFunction = async ({ request, params }) => {
   await requireAdminUser(request)
 
   const formData = await request.formData()
@@ -48,12 +61,17 @@ export const action: ActionFunction = async ({ request }) => {
   invariant(typeof slug === "string", "slug must be a string")
   invariant(typeof markdown === "string", "markdown must be a string")
 
-  await createPost({ title, slug, markdown })
+  if (params.slug?.toLowerCase() === "create") {
+    await createPost({ title, slug, markdown })
+  } else {
+    // await updatePost({ title, slug, markdown })
+  }
 
   return redirect("/posts/admin")
 }
 
-export default function NewPostRoute() {
+export default function CreatePostRoute() {
+  const data = useLoaderData<LoaderData>()
   const errors = useActionData<ActionData>()
 
   const transition = useTransition()
