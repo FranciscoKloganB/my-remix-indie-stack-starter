@@ -1,11 +1,13 @@
 import type { ActionFunction } from "@remix-run/node"
 import { Form, useActionData, useTransition } from "@remix-run/react"
+import type { LoaderFunction } from "@remix-run/server-runtime"
 import { json, redirect } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
 
 import { FormError } from "~/components"
 import { FormInput } from "~/components/FormInput"
 import { createPost } from "~/models/post.server"
+import { requireAdminUser } from "~/session.server"
 
 type ActionData =
   | {
@@ -15,9 +17,15 @@ type ActionData =
     }
   | undefined
 
-const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg`
+export const loader: LoaderFunction = async ({ request }) => {
+  await requireAdminUser(request)
+
+  return json({})
+}
 
 export const action: ActionFunction = async ({ request }) => {
+  await requireAdminUser(request)
+
   const formData = await request.formData()
 
   const title = formData.get("title")
@@ -73,7 +81,7 @@ export default function NewPostRoute() {
           id="markdown"
           rows={20}
           name="markdown"
-          className={`${inputClassName} font-mono`}
+          className="w-full rounded border border-gray-500 px-2 py-1 text-lg font-mono"
         />
       </p>
       <div className="flex justify-end gap-4">
