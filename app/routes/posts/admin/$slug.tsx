@@ -1,5 +1,12 @@
 import type { ActionFunction } from "@remix-run/node"
-import { Form, useActionData, useLoaderData, useTransition } from "@remix-run/react"
+import {
+  Form,
+  useActionData,
+  useCatch,
+  useLoaderData,
+  useParams,
+  useTransition
+} from "@remix-run/react"
 import type { LoaderFunction } from "@remix-run/server-runtime"
 import { json, redirect } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
@@ -33,6 +40,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   const post = await getPost(slug)
+
+  if (!post) {
+    throw new Response("Post not found", { status: 404 })
+  }
 
   return json<LoaderData>({ post })
 }
@@ -153,4 +164,19 @@ export default function CreatePostRoute() {
       </div>
     </Form>
   )
+}
+
+export function CatchBoundary() {
+  const caught = useCatch()
+  const params = useParams()
+
+  if (caught.status === 404) {
+    return (
+      <div>
+        <p>{`It appears the post '${params.slug}', which you are trying to edit does not exist.`}</p>
+      </div>
+    )
+  }
+
+  throw new Error(`Unsupported thrown response status code: ${caught.status}`)
 }
