@@ -21,22 +21,26 @@ const USER_SESSION_KEY = "userId"
 
 export async function getSession(request: Request) {
   const cookie = request.headers.get("Cookie")
+
   return sessionStorage.getSession(cookie)
 }
 
 export async function getUserId(request: Request): Promise<User["id"] | undefined> {
   const session = await getSession(request)
   const userId = session.get(USER_SESSION_KEY)
+
   return userId
 }
 
 export async function getUser(request: Request) {
   const userId = await getUserId(request)
+
   if (userId === undefined) {
     return null
   }
 
   const user = await getUserById(userId)
+
   if (user) {
     return user
   }
@@ -49,22 +53,35 @@ export async function requireUserId(
   redirectTo: string = new URL(request.url).pathname
 ) {
   const userId = await getUserId(request)
+
   if (!userId) {
     const searchParams = new URLSearchParams([["redirectTo", redirectTo]])
+
     throw redirect(`/login?${searchParams}`)
   }
+
   return userId
 }
 
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request)
-
   const user = await getUserById(userId)
+
   if (user) {
     return user
   }
 
   throw await logout(request)
+}
+
+export async function requireAdminUser(request: Request) {
+  const user = await requireUser(request)
+
+  if (user.email !== environ.ADMIN_EMAIL) {
+    throw await logout(request)
+  }
+
+  return user
 }
 
 export async function createUserSession({
@@ -80,6 +97,7 @@ export async function createUserSession({
 }) {
   const session = await getSession(request)
   session.set(USER_SESSION_KEY, userId)
+
   return redirect(redirectTo, {
     headers: {
       "Set-Cookie": await sessionStorage.commitSession(session, {
@@ -93,6 +111,7 @@ export async function createUserSession({
 
 export async function logout(request: Request) {
   const session = await getSession(request)
+
   return redirect("/", {
     headers: {
       "Set-Cookie": await sessionStorage.destroySession(session)
