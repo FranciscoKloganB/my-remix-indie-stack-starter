@@ -180,3 +180,17 @@ export function CatchBoundary() {
 
   throw new Error(`Unsupported thrown response status code: ${caught.status}`)
 }
+
+export function ErrorBoundary({ error }: { error: unknown }) {
+  console.error(
+    "Post management route (create/edit) or one of its children faced unexpected error",
+    error
+  )
+
+  return (
+    <div>
+      <p>{`Something went wrong. Please come back later.`}</p>
+      {error instanceof Error ? <pre>{error.message}</pre> : null}
+    </div>
+  )
+}
