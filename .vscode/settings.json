@@ -10,6 +10,9 @@
   "emmet.includeLanguages": {
     "postcss": "css"
   },
+  "files.associations": {
+    "*.css": "postcss"
+  },
   "i18n-ally.localesPaths": [],
   "prettier.enable": true,
   "prettier.configPath": ".prettierrc.js",

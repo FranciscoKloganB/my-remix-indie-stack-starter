@@ -12,7 +12,7 @@ import {
 
 import { publicConfig } from "./helpers/env/publicConfig.server"
 import { getUser } from "./session.server"
-import tailwindStylesheetUrl from "./styles/tailwind.css"
+import tailwindStylesheetUrl from "./styles/global.css"
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }]
