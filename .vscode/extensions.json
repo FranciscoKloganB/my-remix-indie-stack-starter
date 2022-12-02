@@ -13,7 +13,6 @@
     "prisma.prisma",
     "rvest.vs-code-prettier-eslint",
     "wix.vscode-import-cost",
-    "visualstudioexptteam.vscodeintellicode",
-    "vunguyentuan.vscode-postcss",
+    "visualstudioexptteam.vscodeintellicode"
   ]
 }
